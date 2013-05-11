@@ -4,8 +4,8 @@
         <id>fmTypeScriptCompiler</id>
         <version>0.8.1-alpha</version>
         <title />
-        <authors>Giovanni Bassi, gardiner91</authors>
-        <owners>gardiner91</owners>
+        <authors>Giovanni Bassi, fuzeman</authors>
+        <owners>fuzeman</owners>
         <projectUrl>https://github.com/fuzeman/TypeScriptCompiler</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>A .NET wrapper around the TypeScript compiler written in TypeScript/JavaScript.</description>
