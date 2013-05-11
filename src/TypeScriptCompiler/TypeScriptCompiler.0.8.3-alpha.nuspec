@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>fmTypeScriptCompiler</id>
-        <version>0.8.2-alpha</version>
+        <version>0.8.3-alpha</version>
         <title />
         <authors>Giovanni Bassi, fuzeman</authors>
         <owners>fuzeman</owners>
@@ -11,6 +11,9 @@
         <description>A .NET wrapper around the TypeScript compiler written in TypeScript/JavaScript.</description>
         <dependencies>
             <group targetFramework=".NETFramework4.5">
+                <dependency id="Noesis.Javascript" version="0.7.1.0" />
+            </group>
+            <group targetFramework=".NETFramework3.5">
                 <dependency id="Noesis.Javascript" version="0.7.1.0" />
             </group>
         </dependencies>
