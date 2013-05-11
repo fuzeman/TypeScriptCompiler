@@ -49,5 +49,4 @@ DB.sdf
 *.docstates
 *.cscfg.bin
 packages/
-.nuget/
 TypeScriptCompiler.*.nupkg
