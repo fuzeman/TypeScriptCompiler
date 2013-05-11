@@ -50,3 +50,4 @@ DB.sdf
 *.cscfg.bin
 packages/
 TypeScriptCompiler.*.nupkg
+*.DotSettings

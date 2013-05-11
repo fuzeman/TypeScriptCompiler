@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{3E9B0CFE-8071-445F-93E0-8489989355BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.vs2012.csproj", "{3E9B0CFE-8071-445F-93E0-8489989355BE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{60370BF4-7966-4026-8DCB-C37E42C79A6C}"
 	ProjectSection(SolutionItems) = preProject
@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{60370B
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeScriptCompiler", "TypeScriptCompiler\TypeScriptCompiler.csproj", "{DCA96C5C-18E4-4503-BAE2-AC5837E33441}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeScriptCompiler", "TypeScriptCompiler\TypeScriptCompiler.vs2012.csproj", "{DCA96C5C-18E4-4503-BAE2-AC5837E33441}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

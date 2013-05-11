@@ -19,7 +19,7 @@ namespace TypeScript
                 tsCode = (string)context.GetParameter("tsCode");
                 error = (string)context.GetParameter("error");
             }
-            if (!string.IsNullOrWhiteSpace(error))
+            if (!string.IsNullOrEmpty(error.Trim()))
             {
                 throw new TypeScriptCompilerException(error);
             }

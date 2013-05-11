@@ -92,7 +92,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TypeScriptCompiler\TypeScriptCompiler.csproj">
+    <ProjectReference Include="..\TypeScriptCompiler\TypeScriptCompiler.vs2012.csproj">
       <Project>{DCA96C5C-18E4-4503-BAE2-AC5837E33441}</Project>
       <Name>TypeScriptCompiler</Name>
     </ProjectReference>
