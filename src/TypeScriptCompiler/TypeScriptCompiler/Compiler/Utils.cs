@@ -14,17 +14,6 @@ namespace TypeScript.Compiler
             return path.Replace("\\", "/");
         }
 
-        public static bool IsRelative(string path)
-        {
-            return !IsRooted(path);
-        }
-
-        public static bool IsRooted(string path)
-        {
-            // TODO: Will not be sufficent on real filesystems
-            return path[0] == '/';
-        }
-
         #endregion
 
         public static PreProcessedFileInfo PreProcessFile(SourceUnit sourceUnit)
