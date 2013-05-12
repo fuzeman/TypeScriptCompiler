@@ -66,6 +66,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compiler\BatchCompiler.cs" />
+    <Compile Include="Compiler\CodeResolver.cs" />
+    <Compile Include="Compiler\Data\CompilationEnvironment.cs" />
+    <Compile Include="Compiler\Data\PreProcessedFileInfo.cs" />
+    <Compile Include="Compiler\Data\FileReference.cs" />
+    <Compile Include="Compiler\Data\SourceUnit.cs" />
+    <Compile Include="Compiler\IOHosts\DirectoryNode.cs" />
+    <Compile Include="Compiler\IOHosts\FileNode.cs" />
+    <Compile Include="Compiler\IOHosts\MemoryIOHost.cs" />
+    <Compile Include="Compiler\IIOHost.cs" />
+    <Compile Include="Compiler\IOHosts\Node.cs" />
+    <Compile Include="Compiler\Utils.cs" />
+    <Compile Include="JavascriptCompilerHost.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -88,6 +101,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
