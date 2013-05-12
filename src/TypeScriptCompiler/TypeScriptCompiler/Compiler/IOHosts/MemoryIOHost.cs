@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace TypeScript.Compiler.IOHosts
 {
@@ -95,11 +96,34 @@ namespace TypeScript.Compiler.IOHosts
 
         public string ResolvePath(string path)
         {
-            var node = FindNode(path);
-            if (node == null)
-                throw new FileNotFoundException();
+            if (!path.StartsWith("/"))
+                path = Current.GetFullName() + path;
 
-            return node.GetFullName();
+            var names = path.TrimStart('/').Split('/');
+            var resultStack = new Stack<string>();
+
+            // Parse Path (resolve parent names)
+            foreach (string name in names)
+            {
+                if (name == "..")
+                {
+                    resultStack.Pop();
+                }
+                else
+                {
+                    resultStack.Push(name);
+                }
+            }
+
+            // Build Path
+            var result = new StringBuilder();
+
+            foreach (var name in resultStack.Reverse())
+            {
+                result.Append("/" + name);
+            }
+
+            return result.ToString();
         }
 
         public string DirectoryName(string path)
@@ -115,6 +139,22 @@ namespace TypeScript.Compiler.IOHosts
                 throw new Exception();
 
             return node.Parent.GetFullName();
+        }
+
+        public bool IsDirectory(string path)
+        {
+            var node = FindNode(path);
+            if (node == null)
+                return false;
+            return node.IsDirectory;
+        }
+
+        public bool IsFile(string path)
+        {
+            var node = FindNode(path);
+            if (node == null)
+                return false;
+            return node.IsFile;
         }
 
         public string ReadFile(string path)

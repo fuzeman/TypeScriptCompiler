@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using TypeScript.Compiler.Data;
 
@@ -7,7 +8,7 @@ namespace TypeScript.Compiler
     public class CodeResolver
     {
         public delegate void ResolutionDelegate(string path, SourceUnit sourceUnit);
-        public delegate void ResolutionErrorDelegate(string path, int line, int col, string message);
+        public delegate void ResolutionErrorDelegate(string path, int? line, int? col, string message);
 
         private CompilationEnvironment _environment;
         private IIOHost _ioHost;
@@ -43,14 +44,23 @@ namespace TypeScript.Compiler
                 {
                     Debug.WriteLine("Reading code from " + resolvedFile.Path);
 
-                    resolvedFile.Content = _environment.IOHost.ReadFile(resolvedFile.Path);
+                    if (_ioHost.IsFile(resolvedFile.Path))
+                    {
+                        resolvedFile.Content = _environment.IOHost.ReadFile(resolvedFile.Path);
 
-                    Debug.WriteLine("Found code at " + resolvedFile.Path);
-                    _visted[absoluteModuleId] = true;
+                        Debug.WriteLine("Found code at " + resolvedFile.Path);
+                        _visted[absoluteModuleId] = true;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Did not find code for " + resolvedFile.Path);
+                        return false;
+                    }
                 }
                 else
                 {
                     // TODO - findFile
+                    throw new NotSupportedException();
                 }
 
                 // Process File
@@ -62,17 +72,20 @@ namespace TypeScript.Compiler
                     var preProcessedFileInfo = Utils.PreProcessFile(resolvedFile);
                     resolvedFile.ReferencedFiles = preProcessedFileInfo.ReferencedFiles;
 
+                    // resolve explicit references
                     foreach (var fileReference in preProcessedFileInfo.ReferencedFiles)
                     {
                         // Normalize path (ensure absolute)
                         var normalizedPath = _ioHost.IsAbsolute(fileReference.Path)
                             ? fileReference.Path
                             : rootDir + "/" + fileReference.Path;
+
                         normalizedPath = _ioHost.ResolvePath(normalizedPath);
 
                         if (resolvedFile.Path == normalizedPath)
                         {
-                            // TODO: post error - file is referencing itself
+                            resolutionErrorCallback(resolvedFile.Path, fileReference.StartLine, fileReference.StartCol,
+                                "Incorrect reference: File contains reference to itself.");
                             continue;
                         }
 
@@ -82,11 +95,16 @@ namespace TypeScript.Compiler
 
                         if (!resolutionResult)
                         {
-                            // TODO: post error - incorrect reference
+                            resolutionErrorCallback(resolvedFile.Path, fileReference.StartLine, fileReference.StartCol,
+                                "Incorrect reference: referenced file: \"" + fileReference.Path + "\" cannot be resolved.");
                         }
                     }
 
+                    // resolve imports
                     // TODO: foreach fileImport in importedFiles
+
+                    // add the file to the appropriate code list
+                    resolutionCallback(resolvedFile.Path, resolvedFile);
                 }
             }
 

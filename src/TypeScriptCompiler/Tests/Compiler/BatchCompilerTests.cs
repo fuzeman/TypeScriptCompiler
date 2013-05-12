@@ -36,7 +36,9 @@ namespace Tests.Compiler
                     {
                         Children = new List<Node>
                         {
-                            new FileNode("dos.ts", "var c = 8653;")
+                            new FileNode("dos.ts",
+                                "///<reference path='missing.ts' />\n" +
+                                "var c = 8653;")
                         }
                     },
 
@@ -45,6 +47,8 @@ namespace Tests.Compiler
                         "var a = 4364;"),
 
                     new FileNode("uno.ts",
+                        "// uno\n" +
+                        "var g = 1235;\n" +
                         "///<reference path='tres/dos.ts' />\n" +
                         "var b = 6684;")
                 }

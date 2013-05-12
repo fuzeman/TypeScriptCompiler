@@ -36,9 +36,9 @@ namespace TypeScript.Compiler
                 {
                     Console.WriteLine("Resolved " + resolvedPath);
                 }, (errorFile, line, col, message) =>
-                {
-                    Console.WriteLine(string.Format("{0} ({1},{2}) : {3}", errorFile, line, col, message));
-                });
+                    Console.WriteLine((line != null && col != null) ?
+                        string.Format("{0} ({1},{2}) : {3}", errorFile, line, col, message) :
+                        string.Format("{0} : {3}", errorFile, line, col, message)));
             }
         }
 
