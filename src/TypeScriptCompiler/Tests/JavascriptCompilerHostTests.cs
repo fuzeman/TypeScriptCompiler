@@ -2,6 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using TypeScript;
+using TypeScript.Compiler;
 
 namespace Tests
 {

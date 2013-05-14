@@ -2,17 +2,17 @@
 using Noesis.Javascript;
 using TypeScript.Properties;
 
-namespace TypeScript
+namespace TypeScript.Compiler
 {
     public class JavascriptCompilerHost
     {
-        private static readonly JavascriptContext _javascriptContext;
+        private static readonly JavascriptContext Context;
         
         static JavascriptCompilerHost()
         {
-            _javascriptContext = new JavascriptContext();
-            _javascriptContext.Run(Resources.typescript_js);
-            _javascriptContext.Run(Resources.compiler_js);
+            Context = new JavascriptContext();
+            Context.Run(Resources.typescript_js);
+            Context.Run(Resources.compiler_js);
         }
 
         #region Run(string code)
@@ -65,13 +65,13 @@ namespace TypeScript
             {
                 foreach (var pair in arguments)
                 {
-                    _javascriptContext.SetParameter(pair.Key, pair.Value);
+                    Context.SetParameter(pair.Key, pair.Value);
                 }
             }
 
-            _javascriptContext.Run(code);
+            Context.Run(code);
 
-            return _javascriptContext.GetParameter(resultParameter);
+            return Context.GetParameter(resultParameter);
         }
 
         public static T Run<T>(string code, string resultParameter, params KeyValuePair<string, object>[] arguments)

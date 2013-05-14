@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using TypeScript.Compiler;
@@ -18,25 +19,27 @@ namespace Tests.Compiler
                 Children = new List<Node>
                 {
                     new FileNode("test.ts", 
-                        "class Greeter {" +
-                        "	greeting: string;" +
-                        "	constructor (message: string) {" +
-                        "		this.greeting = message;" +
-                        "	}" +
-                        "	greet() {" +
-                        "		return \"Hello, \" + this.greeting;" +
-                        "	}" +
-                        "}" +
-
-                        "var greeter = new Greeter(\"world\");" +
-
-                        "var button = document.createElement('button');" +
-                        "button.innerText =\"Say Hello\";" +
-                        "button.onclick = function() {" +
-                        "	alert(greeter.greet());" +
-                        "}" +
-
-                        "document.body.appendChild(button);")
+                        String.Join("\r\n", new string[] {"class Greeter {",
+                            "    greeting: string;",
+                            "    constructor(message: string) {",
+                            "        this.greeting = message;",
+                            "    }",
+                            "    greet() {",
+                            "        return \"Hello, \" + this.greeting;",
+                            "    }",
+                            "}",
+                            "    ",
+                            "var greeter = new Greeter(\"world\");",
+                            "",
+                            "var button = document.createElement('button');",
+                            "button.innerText = \"Say Hello\";",
+                            "button.onclick = function() {",
+                            "    alert(greeter.greet());",
+                            "}",
+                            "",
+                            "document.body.appendChild(button);"
+                        })
+                    )
                 }
             }));
 
