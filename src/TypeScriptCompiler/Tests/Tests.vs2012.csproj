@@ -82,16 +82,12 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="ClassDeclarationTests.cs" />
     <Compile Include="Compiler\IOHosts\MemoryIOHostTests.cs" />
     <Compile Include="Compiler\UtilsTests.cs" />
-    <Compile Include="ErrorThrows.cs" />
-    <Compile Include="TypeScriptPlayExampleScriptTests.cs" />
-    <Compile Include="GetsSimpleStrings.cs" />
+    <Compile Include="Compiler\TypeScriptPlayExampleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Compiler\BatchCompilerTests.cs" />
     <Compile Include="JavascriptCompilerHostTests.cs" />
-    <Compile Include="VariableDeclarationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

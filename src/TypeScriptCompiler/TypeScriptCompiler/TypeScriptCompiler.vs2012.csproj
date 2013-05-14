@@ -86,7 +86,7 @@
     </Compile>
     <Compile Include="TypeScriptCompiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeScriptCompilerException.cs" />
+    <Compile Include="Compiler\CompilerException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

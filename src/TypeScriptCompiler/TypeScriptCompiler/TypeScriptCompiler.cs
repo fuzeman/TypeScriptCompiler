@@ -1,4 +1,5 @@
 ﻿using Noesis.Javascript;
+using TypeScript.Compiler;
 using TypeScript.Properties;
 
 namespace TypeScript
@@ -21,7 +22,7 @@ namespace TypeScript
             }
             if (!string.IsNullOrEmpty(error.Trim()))
             {
-                throw new TypeScriptCompilerException(error);
+                throw new CompilerException(error);
             }
             return tsCode.Trim();
         }

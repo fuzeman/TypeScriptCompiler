@@ -22,6 +22,7 @@ namespace TypeScript.Compiler
             _visted = new Dictionary<string, bool>();
         }
 
+        // TODO: Refactor
         public bool ResolveCode(string referencePath, string parentPath, bool performSearch,
             ResolutionDelegate resolutionCallback, ResolutionErrorDelegate resolutionErrorCallback)
         {

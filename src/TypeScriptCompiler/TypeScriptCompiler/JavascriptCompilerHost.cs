@@ -12,6 +12,7 @@ namespace TypeScript
         {
             _javascriptContext = new JavascriptContext();
             _javascriptContext.Run(Resources.typescript_js);
+            _javascriptContext.Run(Resources.compiler_js);
         }
 
         #region Run(string code)

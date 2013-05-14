@@ -17,5 +17,19 @@ namespace TypeScript.Compiler.Data
             Code = new List<SourceUnit>();
             IOHost = ioHost;
         }
+
+        public Dictionary<string, object> ToJavascriptObject()
+        {
+            var result = new Dictionary<string, object>();
+
+            result["code"] = new object[Code.Count];
+
+            for (var i = 0; i < Code.Count; i++)
+            {
+                ((object[]) result["code"])[i] = Code[i].ToJavascriptObject();
+            }
+
+            return result;
+        }
     }
 }

@@ -22,5 +22,14 @@ namespace TypeScript.Compiler.Data
             Content = null;
             ReferencedFiles = new List<FileReference>();
         }
+
+        public Dictionary<string, object> ToJavascriptObject()
+        {
+            return new Dictionary<string, object>
+            {
+                {"path", Path},
+                {"content", Content},
+            };
+        }
     }
 }
