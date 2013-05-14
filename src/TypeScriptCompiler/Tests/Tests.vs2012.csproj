@@ -83,6 +83,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Compiler\IOHosts\MemoryIOHostTests.cs" />
+    <Compile Include="Compiler\IOHosts\WindowsIOHostTests.cs" />
     <Compile Include="Compiler\UtilsTests.cs" />
     <Compile Include="Compiler\TypeScriptPlayExampleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

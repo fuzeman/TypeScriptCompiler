@@ -47,7 +47,7 @@ namespace Tests.Compiler.IOHosts
             memoryHost.ReadFile("/cuatro.ts").Should().Be("cuatro");
             memoryHost.ReadFile("cuatro.ts").Should().Be("cuatro");
 
-            // '..' Paths
+            // Relative Paths
             memoryHost.ResolvePath("/uno/../cuatro.ts").Should().Be("/cuatro.ts");
             memoryHost.ResolvePath("uno/../cuatro.ts").Should().Be("/cuatro.ts");
             memoryHost.ResolvePath("/uno/../uno/dos.ts").Should().Be("/uno/dos.ts");
