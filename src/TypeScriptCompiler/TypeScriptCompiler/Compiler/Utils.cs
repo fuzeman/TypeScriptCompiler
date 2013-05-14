@@ -81,12 +81,14 @@ namespace TypeScript.Compiler
             Debug.WriteLine("---------------------------------");
 
             // Throw on errors
-            if (((string) jsResult["errors"]).Trim().Length > 0)
+            var errors = (object[]) jsResult["errors"];
+
+            if (errors.Length > 0)
             {
                 Debug.WriteLine(jsResult["errors"]);
                 Debug.WriteLine("---------------------------------");
 
-                throw new CompilerException((string) jsResult["errors"]);
+                throw new CompilerException((object[]) jsResult["errors"]);
             }
 
             return (string) jsResult["source"];

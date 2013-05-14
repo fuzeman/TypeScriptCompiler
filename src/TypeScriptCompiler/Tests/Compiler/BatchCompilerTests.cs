@@ -93,9 +93,7 @@ namespace Tests.Compiler
             catch (CompilerException exception)
             {
                 exception.Message.Should().Be(
-                    "Compilation error: " +
-                    "Check format of expression term, " +
-                    "Code block: 1, Start position: 13, Length: 1\r\n"
+                    "\\test.ts[13, 1]: Check format of expression term\r\n"
                 );
             }
         }

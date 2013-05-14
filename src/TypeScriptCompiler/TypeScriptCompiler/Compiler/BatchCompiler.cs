@@ -88,7 +88,18 @@ namespace TypeScript.Compiler
 
         public string Compile()
         {
-            return Utils.Compile(ResolvedEnvironment);
+            try
+            {
+                return Utils.Compile(ResolvedEnvironment);
+            }
+            catch (CompilerException ex)
+            {
+                // Add environment details and rethrow
+                ex.CompilationFiles = CompilationEnvironment.Code.Select(c => c.Path).ToArray();
+                ex.ResolvedFiles = ResolvedEnvironment.Code.Select(c => c.Path).ToArray();
+
+                throw ex;
+            }
         }
     }
 }
