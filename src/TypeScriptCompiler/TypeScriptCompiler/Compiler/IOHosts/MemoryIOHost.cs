@@ -35,12 +35,12 @@ namespace TypeScript.Compiler.IOHosts
             FinishTree();
         }
 
-        private void FinishTree()
+        protected virtual void FinishTree()
         {
             FinishTree(Current, null);
         }
 
-        private void FinishTree(Node current, Node parent)
+        protected virtual void FinishTree(Node current, Node parent)
         {
             current.Parent = parent;
 
@@ -56,12 +56,12 @@ namespace TypeScript.Compiler.IOHosts
 
         #region FindNode
 
-        private Node FindNode(string path)
+        protected virtual Node FindNode(string path)
         {
             return FindNode(path.Split('/'));
         }
 
-        private Node FindNode(IEnumerable<string> names)
+        protected virtual Node FindNode(IEnumerable<string> names)
         {
             var nameQueue = new Queue<string>(names);
             var current = Current;
@@ -84,17 +84,17 @@ namespace TypeScript.Compiler.IOHosts
 
         #endregion FindNode
 
-        public bool IsRelative(string path)
+        public virtual bool IsRelative(string path)
         {
             return path[0] != '/';
         }
 
-        public bool IsAbsolute(string path)
+        public virtual bool IsAbsolute(string path)
         {
             return !IsRelative(path);
         }
 
-        public string ResolvePath(string path)
+        public virtual string ResolvePath(string path)
         {
             if (!path.StartsWith("/"))
                 path = Current.GetFullName() + path;
@@ -126,7 +126,7 @@ namespace TypeScript.Compiler.IOHosts
             return result.ToString();
         }
 
-        public string DirectoryName(string path)
+        public virtual string DirectoryName(string path)
         {
             var node = FindNode(path);
             if(node == null)
@@ -141,7 +141,7 @@ namespace TypeScript.Compiler.IOHosts
             return node.Parent.GetFullName();
         }
 
-        public bool IsDirectory(string path)
+        public virtual bool IsDirectory(string path)
         {
             var node = FindNode(path);
             if (node == null)
@@ -149,7 +149,7 @@ namespace TypeScript.Compiler.IOHosts
             return node.IsDirectory;
         }
 
-        public bool IsFile(string path)
+        public virtual bool IsFile(string path)
         {
             var node = FindNode(path);
             if (node == null)
@@ -157,7 +157,7 @@ namespace TypeScript.Compiler.IOHosts
             return node.IsFile;
         }
 
-        public string ReadFile(string path)
+        public virtual string ReadFile(string path)
         {
             var node = FindNode(path);
             if(node == null || !node.IsFile)
