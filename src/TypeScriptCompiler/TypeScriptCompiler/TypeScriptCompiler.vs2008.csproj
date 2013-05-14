@@ -66,14 +66,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compiler\BatchCompiler.cs" />
+    <Compile Include="Compiler\CodeResolver.cs" />
+    <Compile Include="Compiler\CompilerException.cs" />
+    <Compile Include="Compiler\Data\CompilationEnvironment.cs" />
+    <Compile Include="Compiler\Data\FileReference.cs" />
+    <Compile Include="Compiler\Data\PreProcessedFileInfo.cs" />
+    <Compile Include="Compiler\Data\SourceUnit.cs" />
+    <Compile Include="Compiler\IIOHost.cs" />
+    <Compile Include="Compiler\IOHosts\DirectoryNode.cs" />
+    <Compile Include="Compiler\IOHosts\FileNode.cs" />
+    <Compile Include="Compiler\IOHosts\MemoryIOHost.cs" />
+    <Compile Include="Compiler\IOHosts\Node.cs" />
+    <Compile Include="Compiler\JavascriptCompilerHost.cs" />
+    <Compile Include="Compiler\Utils.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeScriptCompiler.cs" />
-    <Compile Include="TypeScriptCompilerException.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -81,6 +93,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="compiler.js" />
+    <Content Include="typescript.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
