@@ -86,8 +86,8 @@ namespace TypeScript.Compiler
 
                     if ((string) errorData["type"] == "compiler")
                     {
-                        Debug.WriteLine("Block {0} [{1}, {2}] {3}", errorData["block"],
-                            errorData["start"], errorData["len"], errorData["message"]);
+                        Debug.WriteLine(string.Format("Block {0} [{1}, {2}] {3}", errorData["block"],
+                            errorData["start"], errorData["len"], errorData["message"]));
                     }
                     else if ((string) errorData["type"] == "exception")
                     {
