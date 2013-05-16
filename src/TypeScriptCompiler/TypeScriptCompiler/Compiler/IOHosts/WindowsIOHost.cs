@@ -15,7 +15,7 @@ namespace TypeScript.Compiler.IOHosts
         public virtual string ResolvePath(string path)
         {
             if (IsAbsolute(path))
-                return path;
+                return path.Replace('/', '\\');
 
             path = Path.Combine(BasePath, path);
             return Path.GetFullPath(path);
@@ -34,8 +34,9 @@ namespace TypeScript.Compiler.IOHosts
         public virtual bool IsAbsolute(string path)
         {
             return Path.IsPathRooted(path) &&
-                path.Contains(Path.VolumeSeparatorChar.ToString() + Path.DirectorySeparatorChar) &&
-                !path.Split(Path.DirectorySeparatorChar).Contains("..");
+                (path.Contains(Path.VolumeSeparatorChar.ToString() + '\\') ||
+                path.Contains(Path.VolumeSeparatorChar.ToString() + '/')) &&
+                !path.Split('\\').Contains("..") && !path.Split('/').Contains("..");
         }
 
         public virtual bool IsDirectory(string path)

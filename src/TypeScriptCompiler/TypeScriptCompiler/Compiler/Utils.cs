@@ -10,11 +10,6 @@ namespace TypeScript.Compiler
     {
         #region Paths
 
-        public static string SwitchToForwardSlashes(string path)
-        {
-            return path.Replace("\\", "/");
-        }
-
         public static bool IsFileExtension(string filename, string extension)
         {
             var uFilename = filename.ToUpper();
@@ -85,7 +80,20 @@ namespace TypeScript.Compiler
 
             if (errors.Length > 0)
             {
-                Debug.WriteLine(jsResult["errors"]);
+                foreach (var error in errors)
+                {
+                    var errorData = (Dictionary<string, object>) error;
+
+                    if ((string) errorData["type"] == "compiler")
+                    {
+                        Debug.WriteLine("Block {0} [{1}, {2}] {3}", errorData["block"],
+                            errorData["start"], errorData["len"], errorData["message"]);
+                    }
+                    else if ((string) errorData["type"] == "exception")
+                    {
+                        Debug.WriteLine(errorData["exception"]);
+                    }
+                }
                 Debug.WriteLine("---------------------------------");
 
                 throw new CompilerException((object[]) jsResult["errors"]);

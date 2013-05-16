@@ -44,7 +44,7 @@ namespace TypeScript.Compiler
             // Resolve Code
             for (var i = 0; i < nCode; i++)
             {
-                path = Utils.SwitchToForwardSlashes(CompilationEnvironment.IOHost.ResolvePath(preEnv.Code[i].Path));
+                path = CompilationEnvironment.IOHost.ResolvePath(preEnv.Code[i].Path);
                 _pathMap[preEnv.Code[i].Path] = path;
 
                 resolver.ResolveCode(path, "", false, (resolvedPath, code) =>

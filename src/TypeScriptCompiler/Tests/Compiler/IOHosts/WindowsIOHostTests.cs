@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.IO;
 using FluentAssertions;
+using TypeScript.Compiler;
+using TypeScript.Compiler.Data;
 using TypeScript.Compiler.IOHosts;
 using NUnit.Framework;
 
@@ -23,12 +25,14 @@ namespace Tests.Compiler.IOHosts
             Directory.CreateDirectory(_tempPath);
 
             SimpleSetup();
+            CompileWithDuplicateReferencesSetup();
         }
 
         [TearDown]
         public void TearDown()
         {
             SimpleTearDown();
+            CompileWithDuplicateReferencesTearDown();
 
             try
             {
@@ -46,11 +50,15 @@ namespace Tests.Compiler.IOHosts
 
         #region Simple Test
 
+        private const string Simple_DirectoryName = "Simple";
+        private string Simple_DirectoryPath;
+
         private void SimpleSetup()
         {
             // Create test directory
-            var testPath = Path.Combine(_tempPath, "Simple");
-            Directory.CreateDirectory(testPath);
+            Simple_DirectoryPath = Path.Combine(_tempPath, Simple_DirectoryName);
+            Directory.CreateDirectory(Simple_DirectoryPath);
+            var testPath = Simple_DirectoryPath;
 
             // Create Test Files
             File.WriteAllText(Path.Combine(testPath, "cuatro.ts"), "cuatro");
@@ -63,8 +71,7 @@ namespace Tests.Compiler.IOHosts
         [Test]
         public void Simple()
         {
-            var testDirName = "Simple";
-            var testPath = Path.Combine(_tempPath, testDirName);
+            var testPath = Simple_DirectoryPath;
             var windowsHost = new WindowsIOHost(testPath);
 
             // Resolve Path
@@ -102,7 +109,7 @@ namespace Tests.Compiler.IOHosts
 
         private void SimpleTearDown()
         {
-            var testPath = Path.Combine(_tempPath, "Simple");
+            var testPath = Simple_DirectoryPath;
 
             // Delete Files
             if (File.Exists(Path.Combine(testPath, "cuatro.ts")))
@@ -115,10 +122,70 @@ namespace Tests.Compiler.IOHosts
                 File.Delete(Path.Combine(testPath, "uno", "dos.ts"));
 
             // Delete "uno" directory
-            if(Directory.Exists(Path.Combine(testPath, "uno")))
+            if (Directory.Exists(Path.Combine(testPath, "uno")))
                 Directory.Delete(Path.Combine(testPath, "uno"));
 
             // Delete "Simple" test directory
+            if (Directory.Exists(testPath))
+                Directory.Delete(testPath);
+        }
+
+        #endregion
+
+        #region CompileWithDuplicateReferences
+
+        private const string CompileWithDuplicateReferences_DirectoryName = "CompileWithDuplicateReferences";
+        private string CompileWithDuplicateReferences_DirectoryPath;
+
+        private void CompileWithDuplicateReferencesSetup()
+        {
+            // Create test directory
+            CompileWithDuplicateReferences_DirectoryPath = Path.Combine(_tempPath, CompileWithDuplicateReferences_DirectoryName);
+            var testPath = CompileWithDuplicateReferences_DirectoryPath;
+            Directory.CreateDirectory(testPath);
+
+            // Create Test Files
+            File.WriteAllText(Path.Combine(testPath, "utils.ts"), 
+                "var utils = 1252;");
+
+            File.WriteAllText(Path.Combine(testPath, "two.ts"),
+                "///<reference path='utils.ts' />\n" +
+                "///<reference path='things/one.ts' />\n" +
+                "var two = 3126;");
+
+            Directory.CreateDirectory(Path.Combine(testPath, "things"));
+            File.WriteAllText(Path.Combine(testPath, "things", "one.ts"),
+                "///<reference path='../utils.ts' />\n" +
+                "var one = 1244;");
+        }
+
+        [Test]
+        public void CompileWithDuplicateReferences()
+        {
+            var windowsHost = new WindowsIOHost(CompileWithDuplicateReferences_DirectoryPath);
+            var batchCompiler = new BatchCompiler(windowsHost);
+
+            batchCompiler.CompilationEnvironment.Code.Add(new SourceUnit("two.ts"));
+
+            batchCompiler.Run();
+        }
+
+        private void CompileWithDuplicateReferencesTearDown()
+        {
+            var testPath = CompileWithDuplicateReferences_DirectoryPath;
+
+            if (File.Exists(Path.Combine(testPath, "utils.ts")))
+                File.Delete(Path.Combine(testPath, "utils.ts"));
+
+            if (File.Exists(Path.Combine(testPath, "two.ts")))
+                File.Delete(Path.Combine(testPath, "two.ts"));
+
+            if (File.Exists(Path.Combine(testPath, "things", "one.ts")))
+                File.Delete(Path.Combine(testPath, "things", "one.ts"));
+
+            if(Directory.Exists(Path.Combine(testPath, "things")))
+                Directory.Delete(Path.Combine(testPath, "things"));
+
             if (Directory.Exists(testPath))
                 Directory.Delete(testPath);
         }

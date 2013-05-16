@@ -99,6 +99,45 @@ namespace Tests.Compiler
         }
 
         [Test]
+        public void MultiReference()
+        {
+            var batchCompiler = new BatchCompiler(new MemoryIOHost(new Node
+            {
+                Children = new List<Node>
+                {
+                    new DirectoryNode("tres")
+                    {
+                        Children = new List<Node>
+                        {
+                            new FileNode("dos.ts",
+                                "///<reference path='missing.ts' />\n" +
+                                "///<reference path='../multi.ts' />\n" +
+                                "var c = 8653;")
+                        }
+                    },
+
+                    new FileNode("test.ts",
+                        "///<reference path='uno.ts' />\n" +
+                        "var a = 4364;"),
+
+                    new FileNode("multi.ts",
+                        "var d = 64376;"),
+
+                    new FileNode("uno.ts",
+                        "// uno\n" +
+                        "var g = 1235;\n" +
+                        "///<reference path='tres/dos.ts' />\n" +
+                        "///<reference path='multi.ts' />\n" +
+                        "var b = 6684;")
+                }
+            }));
+
+            batchCompiler.CompilationEnvironment.Code.Add(new SourceUnit("test.ts"));
+
+            batchCompiler.Run();
+        }
+
+        [Test]
         public void SimpleClassDeclaration()
         {
             var batchCompiler = new BatchCompiler(new MemoryIOHost(new Node
